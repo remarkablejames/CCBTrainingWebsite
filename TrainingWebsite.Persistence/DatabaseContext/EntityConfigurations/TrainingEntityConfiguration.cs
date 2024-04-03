@@ -14,8 +14,9 @@ public class TrainingEntityConfiguration:IEntityTypeConfiguration<Training>
                 Id = Guid.NewGuid(),
                 Name = "C# Fundamentals",
                 Description = "C# Fundamentals Training",
-                StartDate = new DateTime(2022, 1, 1),
-                EndDate = new DateTime(2022, 1, 5),
+                // UtcNow is used to get the current date and time in Coordinated Universal Time (UTC)
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddDays(5)
             });
     }
 }

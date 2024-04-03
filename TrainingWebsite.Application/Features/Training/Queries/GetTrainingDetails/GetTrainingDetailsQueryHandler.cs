@@ -5,17 +5,17 @@ using TrainingWebsite.Application.Exceptions;
 
 namespace TrainingWebsite.Application.Features.Training.Queries.GetTrainingDetails;
 
-public class TrainingDetailsQueryHandler: IRequestHandler<TrainingDetailsQuery, TrainingDetailsDto>
+public class GetTrainingDetailsQueryHandler: IRequestHandler<GetTrainingDetailsQuery, TrainingDetailsDto>
 {
     private readonly IMapper _mapper;
     private readonly ITrainingRepository _trainingRepository;
 
-    public TrainingDetailsQueryHandler(IMapper mapper, ITrainingRepository trainingRepository)
+    public GetTrainingDetailsQueryHandler(IMapper mapper, ITrainingRepository trainingRepository)
     {
         _mapper = mapper;
         _trainingRepository = trainingRepository;
     }
-    public async Task<TrainingDetailsDto> Handle(TrainingDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<TrainingDetailsDto> Handle(GetTrainingDetailsQuery request, CancellationToken cancellationToken)
     {
         // get the training by id from the repository
         var training = await _trainingRepository.GetByIdAsync(request.TrainingId);

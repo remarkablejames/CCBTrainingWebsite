@@ -15,9 +15,9 @@ public static class InfrastructureServiceRegistration
     {
         services.Configure((Action<EmailSettings>)(options =>
         {
-            options.ApiKey = configuration["SendGrid:ApiKey"] ?? throw new InvalidOperationException();
-            options.FromName = configuration["SendGrid:FromName"] ?? throw new InvalidOperationException();
-            options.FromAddress = configuration["SendGrid:FromAddress"] ?? throw new InvalidOperationException();
+            options.ApiKey = configuration["EmailSettings:ApiKey"] ?? throw new InvalidOperationException();
+            options.FromName = configuration["EmailSettings:FromName"] ?? throw new InvalidOperationException();
+            options.FromAddress = configuration["EmailSettings:FromAddress"] ?? throw new InvalidOperationException();
         }));
         
         services.AddTransient<IEmailSender, EmailSender>();
