@@ -1,3 +1,4 @@
+using TrainingWebsite.API.Middlewares;
 using TrainingWebsite.Application;
 using TrainingWebsite.Infrastructure;
 using TrainingWebsite.Persistence;
@@ -28,6 +29,15 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// Add Custom Exceprion Middleware
+
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TrainingWebsite.Application.Features.Training.Commands.CreateTraining;
 using TrainingWebsite.Application.Features.Training.Queries.GetAllTrainings;
 using TrainingWebsite.Application.Features.Training.Queries.GetTrainingDetails;
 
@@ -34,8 +35,9 @@ namespace TrainingWebsite.API.Controllers
 
         // POST api/<TrainingsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<Guid> Post([FromBody] CreateTrainingCommand createTrainingCommand)
         {
+            return await _mediator.Send(createTrainingCommand);
         }
 
         // PUT api/<TrainingsController>/5

@@ -1,4 +1,5 @@
 using AutoMapper;
+using TrainingWebsite.Application.Features.Training.Commands.CreateTraining;
 using TrainingWebsite.Application.Features.Training.Queries.GetAllTrainings;
 using TrainingWebsite.Application.Features.Training.Queries.GetTrainingDetails;
 using TrainingWebsite.Domain;
@@ -12,6 +13,7 @@ public class TrainingProfiles: Profile
     {
         CreateMap<Training, TrainingDto>().ReverseMap();
         CreateMap<Training, TrainingDetailsDto>();
+        CreateMap<CreateTrainingCommand, Training>(); // This will map the CreateTrainingCommand to Training when a new training is created. no need to reverse map
     }
     
 }
