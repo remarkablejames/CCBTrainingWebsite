@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrainingWebsite.Application.Contracts.Email;
+using TrainingWebsite.Application.Contracts.Logging;
 using TrainingWebsite.Application.Models.Email;
-using TrainingWebsite.Infrastructure.EmailService;
+using TrainingWebsite.Infrastructure.Services.EmailService;
+using TrainingWebsite.Infrastructure.Services.Logging;
 
 namespace TrainingWebsite.Infrastructure;
 
@@ -19,6 +21,10 @@ public static class InfrastructureServiceRegistration
         }));
         
         services.AddTransient<IEmailSender, EmailSender>();
+        
+        // Register Logging Service
+        services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+        
         
 
         return services;
