@@ -53,5 +53,4 @@ public class Training: BaseEntityModel
     // public bool IsOpenAndNotCancelled { get; set; }
     // public bool IsNotOpenAndNotCancelled { get; set; }
     // public bool IsUpcomingAndCancelled { get; set; }
-
 }

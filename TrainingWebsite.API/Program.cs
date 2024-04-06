@@ -1,3 +1,4 @@
+using Serilog;
 using TrainingWebsite.API.Middlewares;
 using TrainingWebsite.Application;
 using TrainingWebsite.Identity;
@@ -7,6 +8,15 @@ using TrainingWebsite.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// configure Serilog logger
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .ReadFrom.Configuration(hostingContext.Configuration)
+        .Enrich.FromLogContext()
+        .WriteTo.Console();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,8 +47,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Add Custom Exceprion Middleware
+// Add Serilog request logging
+app.UseSerilogRequestLogging();
 
+// Add Custom Exception Middleware
 app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
