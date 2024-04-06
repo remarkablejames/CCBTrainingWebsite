@@ -1,5 +1,6 @@
 using TrainingWebsite.API.Middlewares;
 using TrainingWebsite.Application;
+using TrainingWebsite.Identity;
 using TrainingWebsite.Infrastructure;
 using TrainingWebsite.Persistence;
 
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddIdentityServices(builder.Configuration);
 
 
 // Configure CORS policy
@@ -48,9 +50,7 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.Run();
+app.UseAuthentication();
+app.UseAuthorization();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+app.Run();

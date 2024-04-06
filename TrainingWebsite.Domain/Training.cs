@@ -8,6 +8,14 @@ public class Training: BaseEntityModel
     public string Description { get; set; } = String.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    
+    // public string NameEn { get; set; }
+    // public string DescriptionEn { get; set; }
+    // public string NameFr { get; set; }
+    // public string DescriptionFr { get; set; }
+    // public int CategoryID { get; set; }
+    // public int AudienceID { get; set; }
+    // public int ClassificationID { get; set; }
     // public string Location { get; set; }
     // public string Trainer { get; set; }
     // public int Capacity { get; set; }
