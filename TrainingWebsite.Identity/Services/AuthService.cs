@@ -1,5 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using TrainingWebsite.Application.Contracts.Identity;
 using TrainingWebsite.Application.Exceptions;
 using TrainingWebsite.Application.Models.Identity;
@@ -19,15 +23,83 @@ public class AuthService: IAuthService
         _jwtSettings = jwtSettings;
         _signInManager = signInManager;
     }
-    public  Task<AuthResponse> Login(AuthRequest request)
+    public  async Task<AuthResponse> Login(AuthRequest request)
     {
-        throw new NotImplementedException();
+        var existingUser = await _userManager.FindByEmailAsync(request.Email);
         
-        // JwtSecurityToken jwtSecurityToken = await GenerateJwtToken(existingUser);
+        if (existingUser == null)
+        {
+            throw new NotFoundException($"User not found with Email: {request.Email}", request.Email);
+        }
+        
+        JwtSecurityToken jwtSecurityToken = await GenerateJwtToken(existingUser);
+        var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        
+        return new AuthResponse
+        {
+            Id = existingUser.Id,
+            Token = token,
+            Email = existingUser.Email,
+            UserName = existingUser.UserName
+        };
     }
 
-    public Task<RegistrationResponse> Register(RegistrationRequest request)
+    private async Task<JwtSecurityToken> GenerateJwtToken(ApplicationUser existingUser)
     {
-        throw new NotImplementedException();
+        var userClaims = await _userManager.GetClaimsAsync(existingUser);
+        var roles = await _userManager.GetRolesAsync(existingUser);
+        
+        var roleClaims = roles.Select(role => new Claim("roles", role)).ToList();
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, existingUser.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, existingUser.Email),
+            new Claim("uid", existingUser.Id)
+        }.Union(userClaims).Union(roleClaims);
+        
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Value.Key));
+        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        
+        var jwtSecurityToken = new JwtSecurityToken(
+            issuer: _jwtSettings.Value.Issuer,
+            audience: _jwtSettings.Value.Audience,
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.Value.DurationInMinutes),
+            signingCredentials: signingCredentials);
+        
+        return jwtSecurityToken;
+    }
+
+    public async Task<RegistrationResponse> Register(RegistrationRequest request)
+    {
+        var newUser = new ApplicationUser
+        {
+            Email = request.Email,
+            UserName = request.UserName,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            EmailConfirmed = true
+        };
+        
+        var result = _userManager.CreateAsync(newUser, request.Password).Result;
+        
+        if (!result.Succeeded)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (var error in result.Errors)
+            {
+                str.AppendFormat("{0}\n ", error.Description);
+            }
+            throw new BadRequestException(str.ToString());
+        }
+        
+        await  _userManager.AddToRoleAsync(newUser, "User");
+        
+        return new RegistrationResponse
+        {
+            UserId = newUser.Id,
+        };
+        
     }
 }
