@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingWebsite.Application.Features.Training.Commands.CreateTraining;
@@ -9,6 +10,7 @@ namespace TrainingWebsite.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TrainingsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -35,6 +37,7 @@ namespace TrainingWebsite.API.Controllers
 
         // POST api/<TrainingsController>
         [HttpPost]
+        [Authorize (Roles = "Administrator")] // Only administrators can create a training
         public async Task<Guid> Post([FromBody] CreateTrainingCommand createTrainingCommand)
         {
             return await _mediator.Send(createTrainingCommand);
