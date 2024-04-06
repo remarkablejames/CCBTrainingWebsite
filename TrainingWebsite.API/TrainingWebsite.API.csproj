@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TrainingWebsite.Identity\TrainingWebsite.Identity.csproj" />
       <ProjectReference Include="..\TrainingWebsite.Infrastructure\TrainingWebsite.Infrastructure.csproj" />
       <ProjectReference Include="..\TrainingWebsite.Persistence\TrainingWebsite.Persistence.csproj" />
     </ItemGroup>

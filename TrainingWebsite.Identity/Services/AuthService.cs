@@ -29,7 +29,14 @@ public class AuthService: IAuthService
         
         if (existingUser == null)
         {
-            throw new NotFoundException($"User not found with Email: {request.Email}", request.Email);
+            throw new NotFoundException($"Invalid  Email or Password", "User");
+        }
+        
+        // Check password validity
+        var isPasswordValid = await _userManager.CheckPasswordAsync(existingUser, request.Password);
+        if (!isPasswordValid)
+        {
+            throw new BadRequestException("Invalid email or password"); // Don't give too much information to the user about the error
         }
         
         JwtSecurityToken jwtSecurityToken = await GenerateJwtToken(existingUser);
