@@ -56,6 +56,17 @@ public class ExceptionMiddleware
                     Type = nameof(NotFoundException)
                 };
                 break;
+            case UnAuthorizedException unAuthorizedException:
+                statusCode = HttpStatusCode.Unauthorized;
+                problem = new CustomProblemDetails()
+                {
+                    Status = (int)statusCode,
+                    Title = unAuthorizedException.Message,
+                    Detail = unAuthorizedException.InnerException?.Message,
+                    Type = nameof(UnAuthorizedException)
+                };
+                break;
+                
             default:
                 problem = new CustomProblemDetails { Title = exception.Message, Status = (int)statusCode, Detail = exception.StackTrace, Type = nameof(HttpStatusCode.InternalServerError) };
                 break;
