@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingWebsite.API", "Trai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingWebsite.Identity", "TrainingWebsite.Identity\TrainingWebsite.Identity.csproj", "{C281E0B7-9824-4614-8944-F362F2B791E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingWebsite", "TrainingWebsite\TrainingWebsite.csproj", "{51ECF782-7D16-4DCC-AE57-6C295F10A744}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,7 @@ Global
 		{FABC0068-C9CC-473C-ADB5-229255E89681} = {3A18119E-CA0E-41D2-8F49-D189C367DF87}
 		{406CE408-843C-483C-8725-C2E29F6FC66B} = {8E3E504F-8729-47BF-9C14-E7C4A0703A03}
 		{C281E0B7-9824-4614-8944-F362F2B791E8} = {3A18119E-CA0E-41D2-8F49-D189C367DF87}
+		{51ECF782-7D16-4DCC-AE57-6C295F10A744} = {AAB60AD9-6FBE-4442-A809-093AD03912C9}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A17A123D-8690-4A60-BB4F-BC9A06EF8BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -66,5 +69,9 @@ Global
 		{C281E0B7-9824-4614-8944-F362F2B791E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C281E0B7-9824-4614-8944-F362F2B791E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C281E0B7-9824-4614-8944-F362F2B791E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51ECF782-7D16-4DCC-AE57-6C295F10A744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51ECF782-7D16-4DCC-AE57-6C295F10A744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51ECF782-7D16-4DCC-AE57-6C295F10A744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51ECF782-7D16-4DCC-AE57-6C295F10A744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
