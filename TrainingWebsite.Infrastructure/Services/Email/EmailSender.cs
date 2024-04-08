@@ -4,7 +4,7 @@ using SendGrid.Helpers.Mail;
 using TrainingWebsite.Application.Contracts.Email;
 using TrainingWebsite.Application.Models.Email;
 
-namespace TrainingWebsite.Infrastructure.Services.EmailService;
+namespace TrainingWebsite.Infrastructure.Services.Email;
 
 public class EmailSender: IEmailSender
 {
