@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TrainingWebsite.Application.Contracts.Email;
 using TrainingWebsite.Application.Contracts.Logging;
 using TrainingWebsite.Application.Models.Email;
-using TrainingWebsite.Infrastructure.Services.EmailService;
+using TrainingWebsite.Infrastructure.Services.Email;
 using TrainingWebsite.Infrastructure.Services.Logging;
 
 namespace TrainingWebsite.Infrastructure;
